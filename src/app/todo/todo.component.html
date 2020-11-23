@@ -1,0 +1,84 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit(formDirective)" #formDirective="ngForm">
+
+    <mat-grid-list cols="2" rowHeight="200px">
+        <mat-grid-tile>
+            <div class="controles-container">
+                <!-- $key & Task -->
+                <div class="add-bottom-padding">
+                    <!-- <input type="hidden" formControlName="$key"> -->
+                    <mat-form-field appearance="outline" style="width: 100%">
+                        <mat-label>Enter Your Task*</mat-label>
+                        <input formControlName="task" matInput> <!-- placeholder="Enter Your Task"> -->
+                        <mat-icon matSuffix>add_task</mat-icon>
+                        <mat-error>Entry needed</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            <div class="controles-container">
+             <!-- Priority -->
+                <div class="add-bottom-padding">
+                 <label>Priority*: &nbsp; &nbsp;</label>
+                 <mat-radio-group formControlName="priority">
+                     <mat-radio-button *ngFor="let p of priorityList" value="{{p}}" >{{p}}</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                
+                <!-- Due Date -->
+                <div class="add-bottom-padding">
+                    <mat-form-field>
+                        <input formControlName="dueDate" matInput [matDatepicker]="picker" placeholder="Date to complete task*" [min]="today">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error>Please select a date</mat-error>
+                        <!-- <mat-error *ngIf="form.get('dueDate').hasError('required') && form.get('dueDate').touched">Please select a date</mat-error> -->
+                    </mat-form-field>
+                </div>
+                
+                <!-- Button - Add/Edit & Clear -->
+                <div class="add-bottom-padding button-row">
+                    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">{{ !editStatus ? "Add" : "Edit"}}</button>
+                    <!-- <button *ngIf="!isEditMode" mat-raised-button color="primary" type="submit" [disabled]="service.form.invalid">Add</button>
+                        <button *ngIf="isEditMode" mat-raised-button color="primary" type="button" [disabled]="service.form.invalid">Update</button> -->
+                    <!-- <button mat-raised-button color="warn" type="button" (click)="onClear()">Clear</button> -->
+                    <button mat-flat-button color="primary" type="button" (click)="clearEditToDo()">{{ !editStatus ? "Clear" : "Cancel Edit" }}</button>
+                </div>
+            </div>
+        </mat-grid-tile>       
+    </mat-grid-list>
+
+    <div>
+        <mat-toolbar>
+            <span class="add-space"></span>
+            <span>Task to do</span>
+            <span class="add-space"></span>
+        </mat-toolbar>
+    </div>
+</form>
+
+<mat-list class="list-group">
+    <div>
+        <mat-list-item class="list-group-item" *ngFor="let todo of toDoList; let i = index">
+            <div class="special add-padding" >
+                <div fxLayout="column" [ngStyle]="{'text-decoration': todo.complete ? 'line-through' : ''}">
+                    <strong>{{ todo.task }}</strong>
+                    <div fxLayoutAlign="space-around start">
+                        <div fxLayoutGap="30px">
+                            <small>Due on: {{ todo.dueDate | date: "shortDate" }}</small>
+                            <small>Priority: {{ todo.priority }}</small>
+                        </div>
+                    </div>
+                </div>
+                <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="end end">
+                    <button mat-flat-button color="primary" (click)="completeSingleToDo(i)"><mat-icon>done_outline</mat-icon></button>
+                    <button class="ml-1" mat-flat-button color="accent" (click)="editToDo(i)"><mat-icon>create</mat-icon></button>
+                    <button class="ml-1" mat-flat-button color="warn" (click)="deleteSingleToDo(i)"><mat-icon>delete</mat-icon></button>
+                </div>
+            </div>
+        </mat-list-item>
+    </div>
+</mat-list>
+
+<button class="mt-2 add-margin" mat-flat-button color="warn" type="button" (click)="clearLS()"><mat-icon>delete_sweep</mat-icon>completed tasks</button>

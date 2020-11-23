@@ -1,0 +1,66 @@
+form.normal-form {
+    margin: 10px;
+}
+
+.controles-container {
+    width: 100%;
+    padding: 5%;
+}
+
+.add-bottom-padding {
+    padding-bottom: 10px;
+}
+
+.add-padding {
+    padding: 10px;
+}
+
+.add-margin {
+    margin: 10px;
+}
+
+.list-group-item {
+    border-bottom: 1px solid grey;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+}
+
+.button-row button {
+    margin: 5px;
+}
+
+.add-space {
+    flex: 1 1 auto;
+}
+
+.mat-list-item {
+height: auto !important;
+}
+  
+@media (max-width: 600px) {
+    .special {
+        display: flex;
+        flex-direction: column;
+    }
+
+    mat-list div mat-list-item div {
+        display: flex;
+        flex-direction: column;
+    }
+}
+  
+@media (min-width: 601px) {
+    .special {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+
+    mat-list div mat-list-item div {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}

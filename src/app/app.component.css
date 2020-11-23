@@ -1,0 +1,7 @@
+div.container {
+    margin: 10px 40px;
+}
+
+.add-space {
+    flex: 1 1 auto;
+}
